@@ -1,0 +1,41 @@
+const { Schema, model} = require('mongoose')
+
+const UsuaroiSchema = Schema({
+    nombre:{
+        type:String,
+        require:[true,'El nombre es obligatorio']
+    },
+    correo:{
+        type:String,
+        require:[true,'El correo es obligatorio'],
+        unique:true
+    },
+    constraseña:{
+        type:String,
+        require:[true,'La constraseña es obligatoria']
+    },
+    img:{
+        type:String,
+    },
+    rol:{
+        type:String,
+        require:true,
+        enum:['ADMIN_ROLE','USER_ROLE','VENTAS_ROLE'] //El rol tiene que ser uno o el otro
+    },
+    estado:{
+        type:Boolean,
+        default:true
+    },
+    google:{
+        type:Boolean,
+        default:false
+    }
+})
+
+UsuaroiSchema.methods.toJSON = function() {
+    const { __v, contraseña, ...usuario } = this.toObject(); //Devolvemos todo el usuario menos esos campos
+    return usuario
+}
+
+module.exports = model('Usuario', UsuaroiSchema );
+//El primer parametro es el nombre del modelo y de la conexion, mongoose le agrega la s, el segundo apramerto es el schema que creamos
