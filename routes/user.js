@@ -27,7 +27,12 @@ router.post('/', [
 
 router.patch('/', usersPatch)
 
-router.delete('/', usersDelete)
+//Mismas validaciones que el put
+router.delete('/:id',[
+    check('id','No es un id valido').isMongoId(), 
+    check('id').custom(idExiste),
+    validarCampos,
+], usersDelete)
 
 
 module.exports = router;

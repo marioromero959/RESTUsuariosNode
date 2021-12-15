@@ -7,12 +7,24 @@ const bcryptjs = require('bcryptjs');
 const usersGet = async(req, res = response)=>{
     
     const { limite = 5, desde = 0} = req.query; //Parametros que envio en la url ?param=valor&param=valor
-    const usuarios = await Usuario.find() ///Obtenemos todos los usuarios
-        .skip(Number(desde))
-        .limit(Number(limite)) //Le damos el limite de cantidad de usuarios que queremos 
 
-              
+    //Codigo de ejemplo, hacerlo con Promise.all
+    // const usuarios = await Usuario.find({estado:true}) ///Obtenemos todos los usuarios, si mandamos la llave, ponemos la condicion de lo que queremos que nos devuelva
+        // .skip(Number(desde))
+        // .limit(Number(limite)) //Le damos el limite de cantidad de usuarios que queremos 
+
+    // const total = await Usuario.countDocuments({estado:true}); //Nos da la cantidad de registros de la coleccion
+
+    const [total, usuarios] = await Promise.all([ //Desestructuramos el arreglo para mandar esos datos, es posicional
+        Usuario.countDocuments({estado:true}),
+        Usuario.find({estado:true})
+        .skip(Number(desde))
+        .limit(Number(limite)),
+    ]
+    )//Devuelve un array de promesas que se ejecutan de manera simultanea
+
     res.json({
+        total,
         usuarios
     })
 
@@ -52,10 +64,14 @@ const usersPatch = (req, res = response)=>{
         msg:'patch API'
     })
 }
-const usersDelete = (req, res = response)=>{
-    res.json({
-        msg:'delete API'
-    })
+const usersDelete = async(req, res = response)=>{
+    const { id } = req.params;
+    //No es recomendable borrar el usario, lo mejor es cambiar su estado a false
+    // const usuario = await Usuario.findByIdAndDelete(id) Borra completamente el susuario de la BD
+
+    const usuario = await Usuario.findByIdAndUpdate(id,{estado:false}) //Cambiamos el estado 
+
+    res.json(usuario)
 }
 
 module.exports = {
