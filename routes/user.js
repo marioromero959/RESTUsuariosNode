@@ -1,7 +1,14 @@
 const { Router } = require('express'); //Usamos la funcion Router de express
 const { check } = require('express-validator');
+
 const { usersGet, usersPost, usersPut, usersDelete, usersPatch } = require('../controllers/user');
-const { validarCampos } = require("../middlewares/validar-campos");
+//Asi ordenamos las importaciones de los middlewares
+const {
+    validarCampos,
+    validarJWT,
+    validarRol,
+    tieneRol} = require('../middlewares')
+
 const { esRolValido,emailExiste,idExiste } = require('../helpers/db-validators');
 
 const router = Router();
@@ -29,6 +36,9 @@ router.patch('/', usersPatch)
 
 //Mismas validaciones que el put
 router.delete('/:id',[
+    validarJWT,
+    //validarRol, //Este middleware se ejecuta y sol deja pasar a usuarios administradores
+    tieneRol('ADMIN_ROLE','VENTAS_ROLE'),//Este middleware solo deja pasar a usuarios con esos roles
     check('id','No es un id valido').isMongoId(), 
     check('id').custom(idExiste),
     validarCampos,

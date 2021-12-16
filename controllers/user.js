@@ -42,7 +42,7 @@ const usersPost = async(req, res = response)=>{
     await usuario.save();
 
     res.json({
-        usuario
+        usuario,
     })
 }
 
@@ -64,13 +64,13 @@ const usersPatch = (req, res = response)=>{
         msg:'patch API'
     })
 }
+//No es recomendable borrar el usario, lo mejor es cambiar su estado a false
 const usersDelete = async(req, res = response)=>{
     const { id } = req.params;
-    //No es recomendable borrar el usario, lo mejor es cambiar su estado a false
-    // const usuario = await Usuario.findByIdAndDelete(id) Borra completamente el susuario de la BD
+    // const usuario = await Usuario.findByIdAndDelete(id) Borra completamente el susuario de la BD(No usar)
 
     const usuario = await Usuario.findByIdAndUpdate(id,{estado:false}) //Cambiamos el estado 
-
+    
     res.json(usuario)
 }
 

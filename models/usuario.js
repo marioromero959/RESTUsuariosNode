@@ -10,7 +10,7 @@ const UsuaroiSchema = Schema({
         require:[true,'El correo es obligatorio'],
         unique:true
     },
-    constraseña:{
+    contraseña:{
         type:String,
         require:[true,'La constraseña es obligatoria']
     },
@@ -33,7 +33,8 @@ const UsuaroiSchema = Schema({
 })
 
 UsuaroiSchema.methods.toJSON = function() {
-    const { __v, contraseña, ...usuario } = this.toObject(); //Devolvemos todo el usuario menos esos campos
+    const { __v, contraseña,_id, ...usuario } = this.toObject(); //Devolvemos todo el usuario menos esos campos
+    usuario.uid = _id
     return usuario
 }
 

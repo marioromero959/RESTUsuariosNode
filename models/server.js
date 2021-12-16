@@ -9,6 +9,7 @@ class Server{
         this.port = process.env.PORT
         // Estos son los endpoints disponibles 
         this.userPath = '/api/users';
+        this.authPath = '/api/auth';
         
         //Conectamos la BD
         this.conectarBD()
@@ -40,6 +41,7 @@ class Server{
 
     // Aca podemos cargar los demas enpoints
     routes(){
+       this.app.use(this.authPath, require('../routes/auth')) //Llama a las rutas creadas en routes/auth.js
        this.app.use(this.userPath, require('../routes/user')) //Llama a las rutas creadas en routes/user.js
     }
     listen(){
