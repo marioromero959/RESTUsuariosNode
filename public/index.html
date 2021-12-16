@@ -30,7 +30,7 @@
             //GOOGLE TOKEN: ID_TOKEN
            const token = { id_token: response.credential};
             //Es como hacer un metodo http post en angular
-           fetch('http://localhost:8080/api/auth/google',{
+           fetch('https://restservidornode.herokuapp.com/api/auth/google',{
                method:'POST',
                headers:{
                    'Content-Type':'application/json'
