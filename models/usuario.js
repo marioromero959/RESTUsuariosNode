@@ -1,6 +1,6 @@
 const { Schema, model} = require('mongoose')
 
-const UsuaroiSchema = Schema({
+const UsuarioSchema = Schema({
     nombre:{
         type:String,
         require:[true,'El nombre es obligatorio']
@@ -32,11 +32,11 @@ const UsuaroiSchema = Schema({
     }
 })
 
-UsuaroiSchema.methods.toJSON = function() {
+UsuarioSchema.methods.toJSON = function() {
     const { __v, contraseña,_id, ...usuario } = this.toObject(); //Devolvemos todo el usuario menos esos campos
     usuario.uid = _id
     return usuario
 }
 
-module.exports = model('Usuario', UsuaroiSchema );
+module.exports = model('Usuario', UsuarioSchema );
 //El primer parametro es el nombre del modelo y de la conexion, mongoose le agrega la s, el segundo apramerto es el schema que creamos

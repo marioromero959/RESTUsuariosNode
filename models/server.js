@@ -10,6 +10,9 @@ class Server{
         // Estos son los endpoints disponibles 
         this.userPath = '/api/users';
         this.authPath = '/api/auth';
+        this.buscarPath = '/api/buscar';
+        this.categoriasPath = '/api/categorias';
+        this.productosPath = '/api/productos';
         
         //Conectamos la BD
         this.conectarBD()
@@ -42,7 +45,10 @@ class Server{
     // Aca podemos cargar los demas enpoints
     routes(){
        this.app.use(this.authPath, require('../routes/auth')) //Llama a las rutas creadas en routes/auth.js
-       this.app.use(this.userPath, require('../routes/user')) //Llama a las rutas creadas en routes/user.js
+       this.app.use(this.buscarPath, require('../routes/buscar')) 
+       this.app.use(this.userPath, require('../routes/user')) 
+       this.app.use(this.categoriasPath, require('../routes/categorias')) 
+       this.app.use(this.productosPath, require('../routes/productos')) 
     }
     listen(){
         this.app.listen(this.port,()=>{

@@ -32,7 +32,6 @@ const tieneRol = (...roles)=>{
                 msg:`El servicio requiere uno de estos roles ${roles}`
             })
         }
-        console.log(roles, req.usuario.rol);
         next();
     }
 }
