@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { dbConexion } = require('../database/config');
+const fileUpload = require('express-fileupload');
 
 // En esta clase creams todo lo necesario para inicilizar la app
 class Server{
@@ -13,6 +14,7 @@ class Server{
         this.buscarPath = '/api/buscar';
         this.categoriasPath = '/api/categorias';
         this.productosPath = '/api/productos';
+        this.uploadsPath = '/api/uploads';
         
         //Conectamos la BD
         this.conectarBD()
@@ -37,9 +39,15 @@ class Server{
         // Es para aclarar el tipo de informacion que recibimos
         this.app.use(express.json())
 
-
         // Directorio publico
         this.app.use( express.static('public'))
+
+        //File Upload - Carga de archivos
+        this.app.use(fileUpload({
+            useTempFiles : true,
+            tempFileDir : '/tmp/',
+            createParentPath:true //Crea la carpeta si no existe
+        }));
     }
 
     // Aca podemos cargar los demas enpoints
@@ -49,6 +57,7 @@ class Server{
        this.app.use(this.userPath, require('../routes/user')) 
        this.app.use(this.categoriasPath, require('../routes/categorias')) 
        this.app.use(this.productosPath, require('../routes/productos')) 
+       this.app.use(this.uploadsPath, require('../routes/uploads')) 
     }
     listen(){
         this.app.listen(this.port,()=>{
