@@ -17,7 +17,7 @@ router.put('/:coleccion/:id',[
 ], actualizarImagenCloudinary)
 // ], actualizarImagen)
 
-router.get('/:coleccion/:id',[
+router.get('/:coleccion/:id', [
     check('id', 'El id debe ser un id de Mongo valido').isMongoId(),
     check('coleccion').custom(c=> coleccionesPermitidas(c, ['usuarios','productos'])),
     validarCampos
