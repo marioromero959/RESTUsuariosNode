@@ -152,9 +152,7 @@ const mostrarImagen = async(req, res = response ) => {
                   msg: `No existe un usuario con el id ${ id }`
               });
           }
-      
       break;
-
       case 'productos':
           modelo = await Producto.findById(id);
           if ( !modelo ) {
@@ -162,22 +160,17 @@ const mostrarImagen = async(req, res = response ) => {
                   msg: `No existe un producto con el id ${ id }`
               });
           }
-      
       break;
-  
       default:
           return res.status(500).json({ msg: 'Se me olvidó validar esto'});
   }
 
-
   try {
-      // Limpiar imágenes previas
     if ( modelo.img ) {
-      // Hay que borrar la imagen del servidor
       const pathImagen = path.join( __dirname, '../uploads', coleccion, modelo.img );
-      if ( fs.existsSync( pathImagen ) ) {
-          return res.sendFile( pathImagen )
-      }
+      return res.json( modelo.img )
+      // if ( fs.existsSync( pathImagen ) ) {
+      // }
     }
     const pathImagen = path.join( __dirname, '../assets/no-image.jpg');
     res.sendFile( pathImagen );
