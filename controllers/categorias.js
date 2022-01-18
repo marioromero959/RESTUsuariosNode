@@ -10,7 +10,7 @@ const obtenerCategorias = async(req, res = response) =>{
         Categoria.find({estado:true})
         .populate('usuario','nombre') //Asi mostramos el nombre del usuario
         .skip(Number(desde))
-        .limit(Number(limite)),
+        // .limit(Number(limite)), //Si queremos poner u limite de la cantidad que enviamos
     ]
     )
 

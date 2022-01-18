@@ -18,7 +18,7 @@ const login = async(req,res = response)=>{
     }
     if(!usuario.estado){
         return res.status(400).json({
-            msg:'El correo ingresado no es correcto - por estado'
+            msg:'El correo ingresado no se encuentra activo, hable con el administrador'
         })
     }
 
@@ -26,7 +26,7 @@ const login = async(req,res = response)=>{
     const validarConstraseña = bcryptjs.compareSync(contraseña, usuario.contraseña)
     if(!validarConstraseña){
         return res.status(400).json({
-            msg:'El correo ingresado no es correcto - por contraseña'
+            msg:'La contraseña ingresada no es correcta'
         })
     }
 

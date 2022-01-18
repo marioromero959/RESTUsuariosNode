@@ -4,7 +4,7 @@ const Usuario = require('../models/usuario')
 
 
 const validarJWT = async(req, res = response, next)=>{
-
+    
     const token = req.header('x-token') //Como lo ponemos ahi, es como tiene que mandar el frontend
     
     if(!token){

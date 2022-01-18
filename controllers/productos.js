@@ -11,7 +11,7 @@ const obtenerProductos = async(req, res = response) =>{
         .populate('usuario','nombre') //Asi mostramos el nombre del usuario
         .populate('categoria','nombre') 
         .skip(Number(desde))
-        .limit(Number(limite)),
+        // .limit(Number(limite)), //El total de productos que queremos mandar
     ]
     )
 
