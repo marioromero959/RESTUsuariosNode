@@ -26,6 +26,7 @@ router.get('/:id',[
 router.post('/',[
     validarJWT,
     check('nombre','El nombre es obligatorio').not().isEmpty(),
+    check('precio','El precio es obligatorio').not().isEmpty(),
     check('categoria','No es un id de mongo valido').isMongoId(),
     check('categoria').custom(idExisteCategoria),
     validarCampos

@@ -36,7 +36,7 @@ const obtenerUnProducto = async(req, res = response) =>{
 
 const crearProducto = async(req, res = response) =>{
 
-    const {estado, usuario, ...body} = req.body
+    const {estado,precio,descripcion, usuario, ...body} = req.body
     const productoDB = await Producto.findOne({nombre:body.nombre.toUpperCase()})
 //Si la categoria existe, tira el error
     if(productoDB){
@@ -48,9 +48,11 @@ const crearProducto = async(req, res = response) =>{
     const data = {
         ...body,
         nombre:body.nombre.toUpperCase(),
+        precio,
+        descripcion,
         usuario: req.usuario._id //El usuario debe tener el id de Mongo
     }
-//Creamos la categoria nueva
+//Creamos el nuevo producto
     const producto =  new Producto(data);
 
 //Grabamos en BD
