@@ -38,6 +38,8 @@ router.post('/',[
 router.put('/:id',[
     validarJWT,
     // check('categoria','No es un id de mongo valido').isMongoId(),
+    check('nombre','El nombre es obligatorio').not().isEmpty(),
+    check('precio','El precio es obligatorio').not().isEmpty(),
     check('id').custom(idExisteProducto),
     validarCampos
 ],actualizarProducto)

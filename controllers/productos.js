@@ -67,6 +67,15 @@ const actualizarProducto = async(req, res = response) =>{
     
     //Extraemos el usuario y el estado de la informacion
     const  { estado, usuario, ...data} = req.body
+    
+    const product = await Producto.findById(id)
+    const productoDB = await Producto.findOne({nombre:data.nombre.toUpperCase()})
+    //Si el producto existe, tira el error
+        if(productoDB && product.nombre !== data.nombre.toUpperCase()){
+            return res.status(400).json({
+                msg:`El producto ${productoDB.nombre} ya existe`
+            })
+        }
 
     if(data.nombre){
         data.nombre = data.nombre.toUpperCase()
@@ -81,7 +90,7 @@ const actualizarProducto = async(req, res = response) =>{
 
 const borrarProducto = async(req, res = response) =>{
     
-    const {id} = req.params     
+    const {id} = req.params    
 
     const productoBorrado = await Producto.findByIdAndUpdate(id,{estado:false},{new:true})
 
