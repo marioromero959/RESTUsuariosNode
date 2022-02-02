@@ -3,6 +3,7 @@ const cors = require('cors');
 const { dbConexion } = require('../database/config');
 const fileUpload = require('express-fileupload');
 
+
 // En esta clase creams todo lo necesario para inicilizar la app
 class Server{
     constructor(){
@@ -15,6 +16,7 @@ class Server{
         this.categoriasPath = '/api/categorias';
         this.productosPath = '/api/productos';
         this.uploadsPath = '/api/uploads';
+        this.orderPath = '/api/order';
         
         //Conectamos la BD
         this.conectarBD()
@@ -58,6 +60,7 @@ class Server{
        this.app.use(this.categoriasPath, require('../routes/categorias')) 
        this.app.use(this.productosPath, require('../routes/productos')) 
        this.app.use(this.uploadsPath, require('../routes/uploads')) 
+       this.app.use(this.orderPath, require('../routes/ordermp')) 
     }
     listen(){
         this.app.listen(this.port,()=>{
