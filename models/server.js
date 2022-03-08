@@ -17,6 +17,7 @@ class Server{
         this.productosPath = '/api/productos';
         this.uploadsPath = '/api/uploads';
         this.orderPath = '/api/order';
+        this.email = '/api/email';
         
         //Conectamos la BD
         this.conectarBD()
@@ -61,6 +62,7 @@ class Server{
        this.app.use(this.productosPath, require('../routes/productos')) 
        this.app.use(this.uploadsPath, require('../routes/uploads')) 
        this.app.use(this.orderPath, require('../routes/ordermp')) 
+       this.app.use(this.email, require('../routes/email')) 
     }
     listen(){
         this.app.listen(this.port,()=>{

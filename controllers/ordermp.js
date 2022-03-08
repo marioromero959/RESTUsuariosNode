@@ -9,13 +9,13 @@ mercadopago.configure({
 
 const comprarProductos = async(req, res = response) =>{
 
-    const {precioTotal} = req.body;
+    const productos = req.body;
 
     let preference = {
         items: [
           {
-            title: "Total",
-            unit_price: 1,
+            title: "",
+            unit_price: 0,
             quantity: 1,
           },
         ],
@@ -26,6 +26,13 @@ const comprarProductos = async(req, res = response) =>{
         },
         auto_return:"approved"
       };
+      productos.forEach(producto => {
+        preference.items.push({
+          title: producto.descripcion,
+          unit_price: producto.precio,
+          quantity: producto.cantidad,
+        })
+      });
 
       try {
           const response = await  mercadopago.preferences.create(preference)
